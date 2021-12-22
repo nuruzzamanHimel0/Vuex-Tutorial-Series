@@ -1,7 +1,10 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <button @click.prevent="updatMessage" >Update Message</button>
+    <button @click.prevent="updateMessageActions('Update hye jao hala')" >Update Message</button>
+    <br>
+
+    <button @click.prevent="addUsersNew({'id':3,'name':'rohim','age':50})" >Add Message</button>
     <br>
 
     <ul>
@@ -14,7 +17,7 @@
 </template>
 
 <script>
-import { mapState , mapGetters } from 'vuex'
+import { mapState , mapGetters ,mapActions , mapMutations } from 'vuex'
 
 export default {
   data(){
@@ -32,9 +35,8 @@ export default {
 
   },
   methods:{
-    updatMessage(){
-      this.$store.dispatch("updateMessageActions");
-    }
+    ...mapActions(['updateMessageActions']),
+    ...mapMutations({addUsersNew:'addUsers'}),
   }
 }
 
@@ -46,6 +48,11 @@ export default {
 //     return this.$store.getters.getUsersAge;
 //   }
 // },
+// methods:{
+//   updatMessage(){
+//     this.$store.dispatch("updateMessageActions");
+//   }
+// }
 </script>
 
 

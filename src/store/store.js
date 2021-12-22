@@ -19,18 +19,21 @@ Vue.use(Vuex)
               return state.msg;
           },
           getUsersAge(state){
-              return state.users.filter(user => user.age <40);
+              return state.users.filter(user => user.age >10);
           }
 
       },
     mutations: {
-        updateMessageMutation(state){
-            state.msg =" Update Message"
+        updateMessageMutation(state,payload){
+            state.msg =payload;
+        },
+        addUsers(state, payLoad){
+            state.users.push(payLoad);
         }
     },
     actions:{
-        updateMessageActions(context){
-            context.commit('updateMessageMutation');
+        updateMessageActions(context,data){
+            context.commit('updateMessageMutation',data);
         }
     },
 
