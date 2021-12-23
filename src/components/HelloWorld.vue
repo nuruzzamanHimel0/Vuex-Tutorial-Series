@@ -1,58 +1,96 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    <div class="row">
+      <div class="col-md-12">
+        <h2>{{message}} , count is = {{usersCount}} </h2>
+
+        <br><br>
+        <button @click.prevent="addUsers({id:222,name:'test1',age:222})" >Add User Mutaion</button>
+
+        <ul>
+          <li v-for="(value,key) in getUsersAge" :key="key">
+            {{ value.name}} <br>
+          </li>
+        </ul>
+
+
+      </div>
+      <div class="col-md-6">
+        <h2>{{cartmeg}} , count is = {{crtCount}} </h2>
+        <br>
+        <button @click.prevent="addCartsAct({id:'222',name:'dfdddd',priece:'4444'})" >Add Cart</button>
+        <br>
+        <ul>
+          <li v-for="(value,key) in getallcats" :key="key">
+              {{value.name}} <br>
+          </li>
+        </ul>
+
+      </div>
+      <div class="col-md-6">
+        <h2>{{pdtmsg}} , count is = {{pdtCount}}</h2>
+        <button @click="addProdtfunction( {id:4, name:'iphon 444', price:400})" >Add Products</button>
+        <br>
+        <ul>
+          <li v-for="(value,key) in getallproducts" :key="key">
+              {{value.name}} <br>
+          </li>
+        </ul>
+
+
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
+  import {mapState , mapGetters , mapActions , mapMutations} from 'vuex'
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  data(){
+    return {
+      // msg: this.$store.state.msg,
+    }
+  },
+  mounted(){
+
+  },
+  computed:{
+    //normal
+    ...mapState(['message']),
+    ...mapGetters(['usersCount','getUsersAge']),
+    // module wise
+    ...mapState({cartmeg : state => state.cart.message }),
+    ...mapState({pdtmsg: state => state.products.message }),
+
+    ...mapGetters('products' , {pdtCount: "countProduct" }),
+    ...mapGetters('cart',{crtCount: 'countcart'}),
+
+    ...mapGetters('products',{getallproducts:'getProducts'}),
+    ...mapGetters('cart',{getallcats:'getcarts'}),
+
+
+
+
+  },
+  methods:{
+    //vuex normal
+    ...mapMutations(['addUsers']),
+
+    // vuex module
+    ...mapActions('products',{addProdtfunction: 'addProductAction'}),
+
+    ...mapActions('cart',{addCartsAct:'addCartAction'}),
   }
 }
+
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+  .col-md-6,.col-md-12{
+    border: 5px solid red;
+  }
 </style>
+
+
