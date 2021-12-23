@@ -1,11 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import productsModule from "@/store/productsModule";
+import cartModuls from "@/store/cartModuls";
 
 Vue.use(Vuex)
 
   const store = new Vuex.Store({
+      modules:{
+        products: productsModule,
+          cart: cartModuls,
+      },
     state: {
-        msg:"My name is himel",
+        // message:"My name is himel",
         users:[
             {
                 'id':1,"name":"himel","age":40
@@ -16,7 +22,7 @@ Vue.use(Vuex)
     },
       getters:{
           updateMessageGetters(state){
-              return state.msg;
+              return state.message;
           },
           getUsersAge(state){
               return state.users.filter(user => user.age >10);
@@ -25,7 +31,7 @@ Vue.use(Vuex)
       },
     mutations: {
         updateMessageMutation(state,payload){
-            state.msg =payload;
+            state.message =payload;
         },
         addUsers(state, payLoad){
             state.users.push(payLoad);
