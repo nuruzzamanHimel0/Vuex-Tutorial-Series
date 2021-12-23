@@ -11,7 +11,7 @@ Vue.use(Vuex)
           cart: cartModuls,
       },
     state: {
-        // message:"My name is himel",
+        message:"Welcome to Normal store",
         users:[
             {
                 'id':1,"name":"himel","age":40
@@ -26,6 +26,9 @@ Vue.use(Vuex)
           },
           getUsersAge(state){
               return state.users.filter(user => user.age >10);
+          },
+          usersCount(state){
+              return state.users.length;
           }
 
       },

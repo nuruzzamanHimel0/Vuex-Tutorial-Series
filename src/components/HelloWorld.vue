@@ -1,37 +1,51 @@
 <template>
   <div class="hello">
-    <h1>{{ pmessage }} Number of product = {{productcount}}</h1>
+    <div class="row">
+      <div class="col-md-12">
+        <h2>{{message}} , count is = {{usersCount}} </h2>
 
-    <h1>{{ cmessage }} Number of product = {{catCount}}</h1>
+        <br><br>
+        <button @click.prevent="addUsers({id:222,name:'test1',age:222})" >Add User Mutaion</button>
 
-<!--    <button @click.prevent="updateMessageActions('Update hye jao hala')" >Update Message</button>-->
-    <br>
+        <ul>
+          <li v-for="(value,key) in getUsersAge" :key="key">
+            {{ value.name}} <br>
+          </li>
+        </ul>
 
-    <button @click.prevent="addUsersNew({'id':3,'name':'rohim','age':50})" >Add Message</button>
-    <br>
-    <br>
 
-    <button @click.prevent="addProducts({'id':33,'name':'NEW IPHONE 1','price':5000})" >Add NEW Products</button>
+      </div>
+      <div class="col-md-6">
+        <h2>{{cartmeg}} , count is = {{crtCount}} </h2>
+        <br>
+        <button @click.prevent="addCartsAct({id:'222',name:'dfdddd',priece:'4444'})" >Add Cart</button>
+        <br>
+        <ul>
+          <li v-for="(value,key) in getallcats" :key="key">
+              {{value.name}} <br>
+          </li>
+        </ul>
 
-    <ul>
-      <li v-for="(value,key) in getUsersAge" :key="key">
-        {{value}}
-      </li>
-    </ul>
-    <br>
-    <h2>Products</h2> <br>
+      </div>
+      <div class="col-md-6">
+        <h2>{{pdtmsg}} , count is = {{pdtCount}}</h2>
+        <button @click="addProdtfunction( {id:4, name:'iphon 444', price:400})" >Add Products</button>
+        <br>
+        <ul>
+          <li v-for="(value,key) in getallproducts" :key="key">
+              {{value.name}} <br>
+          </li>
+        </ul>
 
-    <ul>
-      <li v-for="(value,key) in getPrdts" :key="key">
-        {{value.name}} -   {{value.price}}
-      </li>
-    </ul>
+
+      </div>
+    </div>
 
   </div>
 </template>
 
 <script>
-import { mapState , mapGetters ,mapActions , mapMutations } from 'vuex'
+  import {mapState , mapGetters , mapActions , mapMutations} from 'vuex'
 
 export default {
   data(){
@@ -43,42 +57,40 @@ export default {
 
   },
   computed:{
-    //sprate opperator
+    //normal
+    ...mapState(['message']),
+    ...mapGetters(['usersCount','getUsersAge']),
+    // module wise
+    ...mapState({cartmeg : state => state.cart.message }),
+    ...mapState({pdtmsg: state => state.products.message }),
 
-    ...mapState({pmessage : state  => state.products.message }),
-    ...mapState({cmessage : state  => state.cart.message }),
-    // ...mapGetters(['getUsersAge','countProduct','getProducts']),
+    ...mapGetters('products' , {pdtCount: "countProduct" }),
+    ...mapGetters('cart',{crtCount: 'countcart'}),
 
-    ...mapGetters("products",{productcount: "countProduct"}),
-    ...mapGetters("cart",{catCount: "countProduct"}),
+    ...mapGetters('products',{getallproducts:'getProducts'}),
+    ...mapGetters('cart',{getallcats:'getcarts'}),
 
-    ...mapGetters("products",{getPrdts: "getProducts"}),
 
-    ...mapGetters(['getUsersAge']),
 
 
   },
   methods:{
-    // ...mapActions(['updateMessageActions']),
+    //vuex normal
+    ...mapMutations(['addUsers']),
 
-    ...mapActions('products',{addProducts:'addProductAction'}),
-    ...mapMutations({addUsersNew:'addUsers'}),
+    // vuex module
+    ...mapActions('products',{addProdtfunction: 'addProductAction'}),
+
+    ...mapActions('cart',{addCartsAct:'addCartAction'}),
   }
 }
 
-// computed:{
-//   msg(){
-//     return this.$store.state.msg
-//   },
-//   getUser(){
-//     return this.$store.getters.getUsersAge;
-//   }
-// },
-// methods:{
-//   updatMessage(){
-//     this.$store.dispatch("updateMessageActions");
-//   }
-// }
 </script>
+
+<style scoped>
+  .col-md-6,.col-md-12{
+    border: 5px solid red;
+  }
+</style>
 
 

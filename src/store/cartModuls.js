@@ -2,28 +2,28 @@ export default {
     namespaced:true,
     state:{
         message: 'welcome to Cart page',
-        products:[
+        cart:[
             {id:1, name:"himel 1", price:200},
             {id:2, name:"himel 2", price:100},
 
         ]
     },
     getters:{
-        countProduct(state){
-            return state.products.length;
+        countcart(state){
+            return state.cart.length;
         },
-        getProducts(state){
-            return state.products;
+        getcarts(state){
+            return state.cart;
         }
     },
     mutations:{
-        addproductmution(state,payLoad){
-            state.products.push(payLoad);
+        addCartMut(state,payLoad){
+            state.cart.push(payLoad);
         }
     },
     actions:{
-        addProductAction(context,data){
-            context.commit('addproductmution',data);
+        addCartAction(context,data){
+            context.commit('addCartMut',data);
         }
     },
 
